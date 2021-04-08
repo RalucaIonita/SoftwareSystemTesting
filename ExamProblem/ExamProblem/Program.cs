@@ -29,10 +29,10 @@ namespace ExamProblem
             Console.WriteLine("\nMapped data!");
             Console.WriteLine("Maps: " + data.Count);
 
-            // Console.WriteLine("Map 1");
-            // data[0].Points.ForEach(p => Console.WriteLine(p.X + " " + p.Y));
-            // Console.WriteLine("Map 2");
-            // data[1].Points.ForEach(p => Console.WriteLine(p.X + " " + p.Y));
+            Console.WriteLine("Map 1");
+            data[0].Points.ForEach(p => Console.WriteLine(p.X + " " + p.Y));
+            Console.WriteLine("Map 2");
+            data[1].Points.ForEach(p => Console.WriteLine(p.X + " " + p.Y));
 
             
             var stringToWrite = "";

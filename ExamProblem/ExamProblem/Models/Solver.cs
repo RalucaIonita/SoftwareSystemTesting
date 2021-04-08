@@ -52,7 +52,7 @@ namespace ExamProblem.Models
                     foreach (var third in map.Points)
                     {
                         var canForm = first.CanFormTriangle(second, third);
-                        Console.WriteLine(canForm);
+                        // Console.WriteLine(canForm);
                         if(canForm)
                             triangles.Add(new Triangle(first, second, third));
                     }
@@ -78,6 +78,7 @@ namespace ExamProblem.Models
 
         public static bool AreTranslated(Triangle t1, Triangle t2)
         {
+            var origin = new Point(0, 0);
             // Console.WriteLine("\n\n\n\n\nTriangles:");
             // Console.WriteLine(t1.A.X + " " + t2.A.Y);
             // Console.WriteLine(t1.B.X + " " + t2.B.Y);
@@ -108,7 +109,7 @@ namespace ExamProblem.Models
             Console.WriteLine("A: " + dA.X + " " + dA.Y);
             Console.WriteLine("B: " + dB.X + " " + dB.Y);
             Console.WriteLine("C: " + dC.X + " " + dC.Y);
-            if (dA == dB && dB == dC)
+            if (dA == dB && dB == dC && dA != origin)
                 return true;
 
             //A1-B2; B1-C2; C1-A2
@@ -122,7 +123,7 @@ namespace ExamProblem.Models
             Console.WriteLine("C: " + dC.X + " " + dC.Y);
 
 
-            if (dA.X == dB.X && dB.X == dC.X && dA.Y == dB.Y && dB.Y == dC.Y)
+            if (dA == dB && dB == dC && dA != origin)
                 return true;
 
             //A1-C2; B1-A2; C1-B2
@@ -134,7 +135,7 @@ namespace ExamProblem.Models
             Console.WriteLine("B: " + dB.X + " " + dB.Y);
             Console.WriteLine("C: " + dC.X + " " + dC.Y +"\n");
 
-            if (dA == dB && dC == dB)
+            if (dA == dB && dC == dB && dA != origin)
                 return true;
 
             return false;
