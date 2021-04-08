@@ -1,17 +1,18 @@
-﻿	La un examen, N studenți sunt așezați la o masă circulară. Aceștia au de rezolvat o singură problemă. 
-După multe calcule, fiecare a ajuns la rezultatul lui propriu. Desigur, nimeni nu e sigur dacă acest rezultat e bun sau nu. 
-Astfel, instinctul i-a făcut pe toți să se uite în stânga și în dreapta. În loc să își treacă propriul rezultat, ei au trecut suma 
-rezultatelor celor 2 vecini ai săi. În ultimul minut, un val imens de conștiință i-a lovit pe toți deodată. Repede ei au realizat 
-că nu vor ajunge nicăieri în viață dacă trișează și în final s-au hotărât să își treacă propriul lor rezultat. Problema e ca toată 
-lumea a pierdut ciorna cu rezultatul inițial. Singura informație pe care o au la dispoziție este suma rezultatelor celor 2 vecini. 
-Ajutați studenții să ajungă pe calea cea dreaptă prin reconstituirea rezultatelor inițiale.
-
+﻿Giani, un Mai Mare al Oraşului, este acuzat de plagiat în lucrarea sa de licenţă intitulată „Despre 
+cromatica semnelor de circulaţie”. S-a format, bineînţeles, o comisie care să decidă asupra 
+veridicităţii acestei acuzaţii. Aceasta este formată dintr-un semn de circulaţie, un cetăţean care se 
+ocupă cu trafic de fier vechi, un delfin şi un cetăţean care citeşte în stele. În această problemă ne 
+vom preocupa de metoda prin care se va decide cititorul în stele. Acesta se va uita la harta cerului, 
+formată din N stele punctiforme. Apoi va lua în considerare toate triunghiurile care se pot forma cu 
+vârfurile în stele, iar dacă găseşte două triunghiuri astfel încât primul poate fi obţinut din al doilea 
+doar printr-o translaţie atunci consideră că acesta este un semn, iar Giani este vinovat.
+Dându-se T hărţi ale cerului, să se decidă pentru fiecare dacă Giani este vinovat de plagiat sau nu. 
 
 Date de intrare
-Fişierul de intrare examen.in va conține un număr natural N, numărul de studenți. Pe următoarea linie se află N valori, 
-cea de-a i-a reprezentând informația studentului i.
+Fişierul de intrare plagiat.in conţine pe prima sa linie T, numărul de hărţi pe care trebuie să le 
+analizaţi. Fiecare hartă va fi descrisă printr-un număr N, numărul de stele, şi N perechi de numere 
+naturale care descriu coordonatele stelelor.
 
-Date de iesire:
-Fisierul de iesire examen.out va contine pe o singura linie N numere naturale reprezentand rezultatele initiale ale celor N elevi.
-In cazul in care solutia nu este unica, afisati -1
-
+Date de ieşire
+În fişierul de ieşire plagiat.out se vor afla T linii. Linia cu numărul i va conţine cuvântul „DA” dacă
+Giani este vinovat conform hărţii cu numărul i din input. Altfel va conţine cuvântul „NU”.
