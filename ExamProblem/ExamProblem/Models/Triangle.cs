@@ -13,5 +13,8 @@
             C = c;
         }
 
+        public Triangle()
+        {}
+
     }
 }

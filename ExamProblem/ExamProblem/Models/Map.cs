@@ -10,5 +10,10 @@ namespace ExamProblem.Models
         {
             Points = new List<Point>();
         }
+
+        public Map(List<Point> points)
+        {
+            Points = points;
+        }
     }
 }

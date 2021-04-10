@@ -1,22 +1,27 @@
-﻿using System;
-using System.Diagnostics;
+﻿using ExamProblem.Models;
+using System;
 using System.Linq;
-using ExamProblem.Models;
+using System.Threading;
 
 namespace ExamProblem
 {
     class Program
     {
-        private static string InPath =
-            "C:\\Users\\raluc\\source\\repos\\SoftwareSystemTesting\\ExamProblem\\ExamProblem\\plagiat.in";
+        private static string InPath = "..\\..\\..\\..\\ExamProblem\\plagiat.in";
         private static string OutPath =
-            "C:\\Users\\raluc\\source\\repos\\SoftwareSystemTesting\\ExamProblem\\ExamProblem\\plagiat.out";
-        static void Main(string[] args)
+            "..\\..\\..\\..\\ExamProblem\\plagiat.out";
+
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello, world!\n\n I started solving the problem!");
+            Console.WriteLine("Hello, world!\n\nI started solving the problem!");
 
             //load data
             var fileContent = Solver.LoadFileContent(InPath);
+            if (fileContent == Errors.FileNotFound)
+            {
+                Thread.Sleep(5000);
+                return;
+            }
             Console.WriteLine("\nLoaded data!");
             Console.WriteLine("File data:");
             Console.WriteLine(fileContent);
@@ -25,7 +30,13 @@ namespace ExamProblem
             fileContent = fileContent.EliminateWeirdCharacters();
 
             //map data
-            var data = Solver.MapData(fileContent).Where(m => m.Points.Count != 0).ToList();
+            var result = Solver.MapData(fileContent);
+            if(result.Item1 == null) 
+            {
+                Console.WriteLine(result.Item2);
+                return;
+            }
+            var data = result.Item1.Where(m => m.Points.Count != 0).ToList();
             Console.WriteLine("\nMapped data!");
             Console.WriteLine("Maps: " + data.Count);
 
@@ -34,33 +45,36 @@ namespace ExamProblem
             Console.WriteLine("Map 2");
             data[1].Points.ForEach(p => Console.WriteLine(p.X + " " + p.Y));
 
-            
+
             var stringToWrite = "";
             foreach (var map in data)
             {
                 var found = false;
                 Console.WriteLine("**");
                 //get triangles
-                var triangles = Solver.GetTriangles(map);
+                var triResponse = Solver.GetTriangles(map);
+                if (triResponse.Item1 == null)
+                {
+                    Console.WriteLine(triResponse.Item2);
+                    return;
+                }
+
+                var triangles = triResponse.Item1;
                 Console.WriteLine(triangles.Count + "triangles.");
-                for(var i = 0; i < triangles.Count - 1; i++)
-                    for(var j = i + 1; j < triangles.Count; j++)
-                        if (Solver.AreTranslated(triangles[i], triangles[j]))
-                        {
-                            Console.WriteLine("*");
-                            found = true;
-                            goto End;
-                        }
+                for (var i = 0; i < triangles.Count - 1; i++)
+                for (var j = i + 1; j < triangles.Count; j++)
+                    if (Solver.AreTranslated(triangles[i], triangles[j]))
+                    {
+                        Console.WriteLine("*");
+                        found = true;
+                        goto End;
+                    }
 
                 End:
                 if (found)
                     stringToWrite += "DA ";
                 else stringToWrite += "NU ";
             }
-
-            
-
-
 
 
             Console.WriteLine("\n\nWrote solution to file examen.out!");

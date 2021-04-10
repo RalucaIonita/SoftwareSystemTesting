@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ExamProblem.Models;
 
-namespace ExamProblem.Models
+namespace ExamProblem
 {
     public static class Helper
     {
@@ -19,10 +17,20 @@ namespace ExamProblem.Models
             var result = "";
             foreach (var ch in str)
             {
-                if (Char.IsDigit(ch) || ch == ' ' || ch == '\n')
+                if (char.IsDigit(ch) || ch == ' ' || ch == '\n')
                     result += ch;
             }
             return result;
+        }
+
+        public static bool ContainsOnlyOkCharacters(this string str)
+        {
+            foreach (var chr in str)
+            {
+                if (!char.IsDigit(chr) && chr != ' ' && chr != '\n')
+                    return false;
+            }
+            return true;
         }
     }
 }

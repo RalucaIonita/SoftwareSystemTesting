@@ -3,10 +3,26 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <StartupObject>ExamProblem.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Tests\" />
+    <Compile Remove="Tests\FunctionalTesting\**" />
+    <Compile Remove="Tests\NewFolder\**" />
+    <EmbeddedResource Remove="Tests\FunctionalTesting\**" />
+    <EmbeddedResource Remove="Tests\NewFolder\**" />
+    <None Remove="Tests\FunctionalTesting\**" />
+    <None Remove="Tests\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="NinjaTurtles" Version="0.8.1.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

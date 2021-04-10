@@ -7,42 +7,74 @@ namespace ExamProblem.Models
 {
     public static class Solver
     {
-        public static List<Triangle> Triangles { get; set; }
-
         public static string LoadFileContent(string path)
         {
-            var text = File.ReadAllText(path);
-            return text;
+            try
+            {
+                var text = File.ReadAllText(path);
+                return text;
+            }
+            catch (FileNotFoundException)
+            {
+                return Errors.FileNotFound;
+            }
         }
 
-        public static List<Map> MapData(string text)
+        public static Tuple<List<Map>, string> MapData(string text)
         {
+            if(text.Length == 0)
+                return new Tuple<List<Map>, string>(null, Errors.EmptyFile);
+            Console.WriteLine(text);
+            var isValid = text.ContainsOnlyOkCharacters();
+            if (!isValid)
+            {
+                return new Tuple<List<Map>, string>(null, Errors.FileDoesNotContainOnlyDigits);
+            }
+
             var maps = new List<Map>();
 
             var lines = text.Split("\n");
+            var saidCount = Int32.Parse(lines[0]);
+            var number = 0;
 
             Map map = null;
-            foreach (var line in lines)
+            foreach (var line in lines.Skip(1))
             {
                 var splitLine = line.Split(" ");
                 if (splitLine.Length == 1)
                 {
-                    if(map != null)
+
+                    if (map != null)
+                    {
+                        if (number != map.Points.Count)
+                        {
+                            return new Tuple<List<Map>, string>(null, Errors.WrongNumberOfPoints);
+                        }
                         maps.Add(map);
+                    }
                     map = new Map();
+                    if(splitLine[0] != "")
+                        number = Int32.Parse(splitLine[0]);
                 }
                 else
                 {
-                    map.Points.Add(new Point(Int32.Parse(splitLine[0]), Int32.Parse(splitLine[1])));
+                    map?.Points.Add(new Point(Int32.Parse(splitLine[0]), Int32.Parse(splitLine[1])));
                 }
             }
             maps.Add(map);
-            return maps;
+            //check map count
+            var trueCount = maps.Count;
+            if (trueCount != saidCount)
+                return new Tuple<List<Map>, string>(null, Errors.WrongNumberOfMaps);
+
+            return new Tuple<List<Map>, string>(maps, null);
         }
 
 
-        public static List<Triangle> GetTriangles(Map map)
+        public static Tuple<List<Triangle>, string> GetTriangles(Map map)
         {
+            if(map.Points.Count < 3)
+                return new Tuple<List<Triangle>, string>(null, Errors.NotEnoughPoints);
             var triangles = new List<Triangle>();
 
             foreach (var first in map.Points)
@@ -60,7 +92,7 @@ namespace ExamProblem.Models
             }
 
 
-            return triangles;
+            return new Tuple<List<Triangle>, string>(triangles, null);
         }
 
         public static bool AreTranslated(Triangle t1, Triangle t2)
@@ -72,9 +104,6 @@ namespace ExamProblem.Models
             var dC = t1.C - t2.C;
 
 
-            Console.WriteLine("A: " + dA.X + " " + dA.Y);
-            Console.WriteLine("B: " + dB.X + " " + dB.Y);
-            Console.WriteLine("C: " + dC.X + " " + dC.Y);
             if (dA == dB && dB == dC && dA != origin)
                 return true;
 
@@ -82,13 +111,7 @@ namespace ExamProblem.Models
             dA = t1.A - t2.B;
             dB = t1.B - t2.C;
             dC = t1.C - t2.A;
-
-
-            Console.WriteLine("\nA: " + dA.X + " " + dA.Y);
-            Console.WriteLine("B: " + dB.X + " " + dB.Y);
-            Console.WriteLine("C: " + dC.X + " " + dC.Y);
-
-
+            
             if (dA == dB && dB == dC && dA != origin)
                 return true;
 
@@ -96,11 +119,7 @@ namespace ExamProblem.Models
             dA = t1.A - t2.C;
             dB = t1.B - t2.A;
             dC = t1.C - t2.B;
-
-            Console.WriteLine("\nA: " + dA.X + " " + dA.Y);
-            Console.WriteLine("B: " + dB.X + " " + dB.Y);
-            Console.WriteLine("C: " + dC.X + " " + dC.Y +"\n");
-
+            
             if (dA == dB && dC == dB && dA != origin)
                 return true;
 
@@ -108,9 +127,20 @@ namespace ExamProblem.Models
         }
 
 
-        public static void WriteResultToFile(string path, string result)
+        public static bool WriteResultToFile(string path, string result)
         {
-            File.WriteAllText(path, result);
+            try
+            {
+                File.WriteAllText(path, result);
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            
         }
     }
 }
