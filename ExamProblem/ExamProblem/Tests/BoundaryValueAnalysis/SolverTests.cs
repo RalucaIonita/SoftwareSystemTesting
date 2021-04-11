@@ -10,9 +10,9 @@ namespace ExamProblem.Tests.BoundaryValueAnalysis
         // Coordinates are between 0 and 109
 
         [Fact]
-        public void MapData_ReturnsErrorIfNumberOfMapsOutOfBoundaries()
+        public void MapData_ReturnsErrorIfNumberOfNumberOfMapsTooSmall() // maps count < 1
         {
-
+            var input = "";
         }
     }
 }

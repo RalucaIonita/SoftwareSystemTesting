@@ -17,5 +17,20 @@
         {
             return new Point((p1.X - p2.X), (p1.Y - p2.Y));
         }
+
+        // public static bool operator ==(Point p1, Point p2)
+        // {
+        //     return (p1.X == p2.X && p1.Y == p2.Y);
+        // }
+        //
+        // public static bool operator !=(Point p1, Point p2)
+        // {
+        //     return (p1.X != p2.X || p1.Y != p2.Y);
+        // }
+
+        public virtual bool Equals(Point p)
+        {
+            return (X == p.X && Y == p.Y);
+        }
     }
 }

@@ -113,8 +113,7 @@ namespace ExamProblem.Models
             if (t1 == null || t2 == null)
                 return new Tuple<bool?, string>(null, Errors.NullTriangle);
 
-
-
+            
             var origin = new Point(0, 0);
 
             var dA = t1.A - t2.A;
@@ -122,23 +121,23 @@ namespace ExamProblem.Models
             var dC = t1.C - t2.C;
 
 
-            if (dA == dB && dB == dC && dA != origin)
+            if (dA.Equals(dB) && dB.Equals(dC) && !dA.Equals(origin))
                 return new Tuple<bool?, string>(true, null);
 
             //A1-B2; B1-C2; C1-A2
             dA = t1.A - t2.B;
             dB = t1.B - t2.C;
             dC = t1.C - t2.A;
-            
-            if (dA == dB && dB == dC && dA != origin)
+
+            if (dA.Equals(dB) && dB.Equals(dC) && !dA.Equals(origin))
                 return new Tuple<bool?, string>(true, null);
 
             //A1-C2; B1-A2; C1-B2
             dA = t1.A - t2.C;
             dB = t1.B - t2.A;
             dC = t1.C - t2.B;
-            
-            if (dA == dB && dC == dB && dA != origin)
+
+            if (dA.Equals(dB) && dB.Equals(dC) && !dA.Equals(origin))
                 return new Tuple<bool?, string>(true, null);
 
             return new Tuple<bool?, string>(false, null);
