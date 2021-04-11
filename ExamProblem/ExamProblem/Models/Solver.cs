@@ -35,6 +35,11 @@ namespace ExamProblem.Models
 
             var lines = text.Split("\n");
             var saidCount = Int32.Parse(lines[0]);
+            if (saidCount < 1)
+                return new Tuple<List<Map>, string>(null, Errors.NumberOfMapsTooSmall);
+            if(saidCount > 5)
+                return new Tuple<List<Map>, string>(null, Errors.NumberOfMapsTooBig);
+
             var number = 0;
 
             Map map = null;
@@ -58,7 +63,15 @@ namespace ExamProblem.Models
                 }
                 else
                 {
-                    map?.Points.Add(new Point(Int32.Parse(splitLine[0]), Int32.Parse(splitLine[1])));
+                    var point = new Point(Int32.Parse(splitLine[0]), Int32.Parse(splitLine[1]));
+                    Console.WriteLine(point.X + "-----" + point.Y);
+                    if (map?.Points.Count != 0)
+                    {
+                        var exists = map.Points.FirstOrDefault(p => p.X == point.X && p.Y == point.Y);
+                        if (exists != null)
+                            return new Tuple<List<Map>, string>(null, Errors.TwoIdenticalPoints);
+                    }
+                    map?.Points.Add(point);
                 }
             }
             maps.Add(map);
@@ -95,8 +108,13 @@ namespace ExamProblem.Models
             return new Tuple<List<Triangle>, string>(triangles, null);
         }
 
-        public static bool AreTranslated(Triangle t1, Triangle t2)
+        public static Tuple<bool?, string> AreTranslated(Triangle t1, Triangle t2)
         {
+            if (t1 == null || t2 == null)
+                return new Tuple<bool?, string>(null, Errors.NullTriangle);
+
+
+
             var origin = new Point(0, 0);
 
             var dA = t1.A - t2.A;
@@ -105,7 +123,7 @@ namespace ExamProblem.Models
 
 
             if (dA == dB && dB == dC && dA != origin)
-                return true;
+                return new Tuple<bool?, string>(true, null);
 
             //A1-B2; B1-C2; C1-A2
             dA = t1.A - t2.B;
@@ -113,7 +131,7 @@ namespace ExamProblem.Models
             dC = t1.C - t2.A;
             
             if (dA == dB && dB == dC && dA != origin)
-                return true;
+                return new Tuple<bool?, string>(true, null);
 
             //A1-C2; B1-A2; C1-B2
             dA = t1.A - t2.C;
@@ -121,9 +139,9 @@ namespace ExamProblem.Models
             dC = t1.C - t2.B;
             
             if (dA == dB && dC == dB && dA != origin)
-                return true;
+                return new Tuple<bool?, string>(true, null);
 
-            return false;
+            return new Tuple<bool?, string>(false, null);
         }
 
 

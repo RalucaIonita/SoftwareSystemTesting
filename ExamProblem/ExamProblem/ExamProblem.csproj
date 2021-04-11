@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <Compile Remove="Tests\FunctionalTesting\**" />
-    <Compile Remove="Tests\NewFolder\**" />
     <EmbeddedResource Remove="Tests\FunctionalTesting\**" />
-    <EmbeddedResource Remove="Tests\NewFolder\**" />
     <None Remove="Tests\FunctionalTesting\**" />
-    <None Remove="Tests\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

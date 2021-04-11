@@ -62,14 +62,23 @@ namespace ExamProblem
                 var triangles = triResponse.Item1;
                 Console.WriteLine(triangles.Count + "triangles.");
                 for (var i = 0; i < triangles.Count - 1; i++)
-                for (var j = i + 1; j < triangles.Count; j++)
-                    if (Solver.AreTranslated(triangles[i], triangles[j]))
+                    for (var j = i + 1; j < triangles.Count; j++)
                     {
-                        Console.WriteLine("*");
-                        found = true;
-                        goto End;
+                        var areTranslated = Solver.AreTranslated(triangles[i], triangles[j]); 
+                        if (areTranslated.Item1 == null)
+                        {
+                            Console.WriteLine(areTranslated.Item2);
+                            return;
+                        }
+                        
+                        if (areTranslated.Item1.Value)
+                        {
+                            Console.WriteLine("*");
+                            found = true;
+                            goto End;
+                        }
                     }
-
+                
                 End:
                 if (found)
                     stringToWrite += "DA ";
