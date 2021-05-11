@@ -141,7 +141,6 @@ namespace ExamProblem.Tests.EquivalenceClassesAnalysis
         //classes -> 
         // C1 = {points | triangles formed of points are translated}
         // C2 = {points | triangles formed of points are not translated}
-        // C3 = {points | one or both of the triangles are null}
 
 
         [Fact]
@@ -187,23 +186,6 @@ namespace ExamProblem.Tests.EquivalenceClassesAnalysis
             var result = Solver.AreTranslated(t1, t2);
             Assert.False(result.Item1);
             Assert.True(result.Item2 == null);
-
-        }
-
-
-        [Fact]
-        public void AreTranslated_ReturnsErrorIfOneOrBothDoNotExist() //Class 3
-        {
-            var t1 = new Triangle
-            {
-                A = new Point(1, 1),
-                B = new Point(1, 3),
-                C = new Point(4, 3),
-            };
-            
-            var result = Solver.AreTranslated(t1, null);
-            Assert.True(result.Item1 == null);
-            Assert.True(result.Item2 == Errors.NullTriangle);
 
         }
     }

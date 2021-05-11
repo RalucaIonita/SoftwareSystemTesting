@@ -117,21 +117,16 @@ namespace ExamProblem
             return new Tuple<List<Triangle>, string>(triangles, null);
         }
 
-        public static Tuple<bool?, string> AreTranslated(Triangle t1, Triangle t2)
+        public static Tuple<bool, string> AreTranslated(Triangle t1, Triangle t2)
         {
-            if (t1 == null || t2 == null)
-                return new Tuple<bool?, string>(null, Errors.NullTriangle);
-
-            
             var origin = new Point(0, 0);
 
             var dA = t1.A - t2.A;
             var dB = t1.B - t2.B;
             var dC = t1.C - t2.C;
 
-
             if (dA.Equals(dB) && dB.Equals(dC) && !dA.Equals(origin))
-                return new Tuple<bool?, string>(true, null);
+                return new Tuple<bool, string>(true, null);
 
             //A1-B2; B1-C2; C1-A2
             dA = t1.A - t2.B;
@@ -139,7 +134,7 @@ namespace ExamProblem
             dC = t1.C - t2.A;
 
             if (dA.Equals(dB) && dB.Equals(dC) && !dA.Equals(origin))
-                return new Tuple<bool?, string>(true, null);
+                return new Tuple<bool, string>(true, null);
 
             //A1-C2; B1-A2; C1-B2
             dA = t1.A - t2.C;
@@ -147,9 +142,9 @@ namespace ExamProblem
             dC = t1.C - t2.B;
 
             if (dA.Equals(dB) && dB.Equals(dC) && !dA.Equals(origin))
-                return new Tuple<bool?, string>(true, null);
+                return new Tuple<bool, string>(true, null);
 
-            return new Tuple<bool?, string>(false, null);
+            return new Tuple<bool, string>(false, null);
         }
 
 

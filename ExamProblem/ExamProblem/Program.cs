@@ -8,8 +8,7 @@ namespace ExamProblem
     class Program
     {
         private static string InPath = "..\\..\\..\\..\\ExamProblem\\plagiat.in";
-        private static string OutPath =
-            "..\\..\\..\\..\\ExamProblem\\plagiat.out";
+        private static string OutPath = "..\\..\\..\\..\\ExamProblem\\plagiat.out";
 
         public static void Main(string[] args)
         {
@@ -64,14 +63,9 @@ namespace ExamProblem
                 for (var i = 0; i < triangles.Count - 1; i++)
                     for (var j = i + 1; j < triangles.Count; j++)
                     {
-                        var areTranslated = Solver.AreTranslated(triangles[i], triangles[j]); 
-                        if (areTranslated.Item1 == null)
-                        {
-                            Console.WriteLine(areTranslated.Item2);
-                            return;
-                        }
-                        
-                        if (areTranslated.Item1.Value)
+                        var areTranslated = Solver.AreTranslated(triangles[i], triangles[j]);
+
+                        if (areTranslated.Item1)
                         {
                             Console.WriteLine("*");
                             found = true;
@@ -86,7 +80,7 @@ namespace ExamProblem
             }
 
 
-            Console.WriteLine("\n\nWrote solution to file examen.out!");
+            Console.WriteLine("\n\nWrote solution to file plagiat.out!");
             Solver.WriteResultToFile(OutPath, stringToWrite);
             Console.WriteLine("\nOk, bye!");
         }

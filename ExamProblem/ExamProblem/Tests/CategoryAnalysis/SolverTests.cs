@@ -106,7 +106,46 @@ namespace ExamProblem.Tests.CategoryAnalysis
             Assert.True(result.Item2 == null);
         }
 
+        //plagiarism
+        [Fact]
+        public void AreTranslated_ReturnsTrueIfAreTranslated() // is plagiarism
+        {
+            var p1 = new Point(1, 1);
+            var p2 = new Point(2, 1);
+            var p3 = new Point(1, 3);
 
+            var p4 = new Point(2, 2);
+            var p5 = new Point(3, 2);
+            var p6 = new Point(2, 4);
+
+            var firstTriangle = new Triangle(p1, p2, p3);
+            var secondTriangle = new Triangle(p4, p5, p6);
+
+            var result = Solver.AreTranslated(firstTriangle, secondTriangle);
+
+            Assert.True(result.Item1);
+            Assert.True(result.Item2 == null);
+        }
+
+        [Fact]
+        public void AreTranslated_ReturnsTrueIfAreNotTranslated() // is not plagiarism
+        {
+            var p1 = new Point(1, 1);
+            var p2 = new Point(2, 1);
+            var p3 = new Point(1, 4);
+
+            var p4 = new Point(2, 2);
+            var p5 = new Point(3, 2);
+            var p6 = new Point(2, 4);
+
+            var firstTriangle = new Triangle(p1, p2, p3);
+            var secondTriangle = new Triangle(p4, p5, p6);
+
+            var result = Solver.AreTranslated(firstTriangle, secondTriangle);
+
+            Assert.False(result.Item1);
+            Assert.True(result.Item2 == null);
+        }
 
     }
 }
