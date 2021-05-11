@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ExamProblem.Models;
 
-namespace ExamProblem.Models
+namespace ExamProblem
 {
     public static class Solver
     {
@@ -48,7 +49,6 @@ namespace ExamProblem.Models
                 var splitLine = line.Split(" ");
                 if (splitLine.Length == 1)
                 {
-
                     if (map != null)
                     {
                         if (number != map.Points.Count)
@@ -60,14 +60,24 @@ namespace ExamProblem.Models
                     map = new Map();
                     if(splitLine[0] != "")
                         number = Int32.Parse(splitLine[0]);
+                    if (number < 1)
+                        return new Tuple<List<Map>, string>(null, Errors.NumberOfStarsTooSmall);
+                    if (number > 400)
+                        return new Tuple<List<Map>, string>(null, Errors.NumberOfStarsTooBig);
                 }
                 else
                 {
-                    var point = new Point(Int32.Parse(splitLine[0]), Int32.Parse(splitLine[1]));
-                    Console.WriteLine(point.X + "-----" + point.Y);
+                    var x = Int32.Parse(splitLine[0]);
+                    var y = Int32.Parse(splitLine[1]);
+                    if (x < 0 || y < 0)
+                        return new Tuple<List<Map>, string>(null, Errors.CoordinateTooSmall);
+                    if (x > 109 || y > 109)
+                        return new Tuple<List<Map>, string>(null, Errors.CoordinateTooBig);
+                    var point = new Point(x, y);
+                    Console.WriteLine(point.X + " -----> " + point.Y);
                     if (map?.Points.Count != 0)
                     {
-                        var exists = map.Points.FirstOrDefault(p => p.X == point.X && p.Y == point.Y);
+                        var exists = map?.Points.FirstOrDefault(p => p.X == point.X && p.Y == point.Y);
                         if (exists != null)
                             return new Tuple<List<Map>, string>(null, Errors.TwoIdenticalPoints);
                     }
@@ -103,7 +113,6 @@ namespace ExamProblem.Models
                     
                 }
             }
-
 
             return new Tuple<List<Triangle>, string>(triangles, null);
         }

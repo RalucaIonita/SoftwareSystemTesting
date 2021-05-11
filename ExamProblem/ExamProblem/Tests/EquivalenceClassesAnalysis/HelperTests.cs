@@ -1,7 +1,7 @@
 ﻿using ExamProblem.Models;
 using Xunit;
 
-namespace ExamProblem.Tests.EquivalenceClasses
+namespace ExamProblem.Tests.EquivalenceClassesAnalysis
 {
     public class HelperTests
     {

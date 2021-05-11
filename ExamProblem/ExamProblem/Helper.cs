@@ -27,7 +27,7 @@ namespace ExamProblem
         {
             foreach (var chr in str)
             {
-                if (!char.IsDigit(chr) && chr != ' ' && chr != '\n')
+                if (!char.IsDigit(chr) && chr != ' ' && chr != '\n' && chr != '-')
                     return false;
             }
             return true;

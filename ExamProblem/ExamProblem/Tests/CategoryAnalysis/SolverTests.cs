@@ -1,16 +1,18 @@
-﻿using ExamProblem.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ExamProblem.Models;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ExamProblem.Tests.BoundaryValueAnalysis
+namespace ExamProblem.Tests.CategoryAnalysis
 {
     public class SolverTests
     {
-        //boundaries ->
-        // T has values between 1 and 5
-        // N has values between 1 and 400
-        // Coordinates are between 0 and 109
+        //categories ->
+        // T -> T in [1, 5] and T not in [1, 5]
+        // N -> N in [1, 400] and N not in [1, 400]
+        // Coordinates -> coordinates in [0, 109] and not in [0, 109]
+        // Identical points -> are in map, are not in map
+        // Plagiarism -> is and is not
 
         private readonly ITestOutputHelper _testOutputHelper;
 
@@ -21,17 +23,17 @@ namespace ExamProblem.Tests.BoundaryValueAnalysis
 
         //T
         [Fact]
-        public void MapData_ReturnsErrorIfNumberOfMapsTooSmall() // maps count < 1
+        public void MapData_ReturnsErrorIfNumberOfMapsNotInInterval() // T not in interval
         {
             var input = "0";
             var result = Solver.MapData(input);
             _testOutputHelper.WriteLine(result.Item2);
             Assert.True(result.Item1 == null);
-            Assert.True(result.Item2 == Errors.NumberOfMapsTooSmall);
+            Assert.True(result.Item2 == Errors.NumberOfMapsTooSmall || result.Item2 == Errors.NumberOfMapsTooBig);
         }
 
         [Fact]
-        public void MapData_ReturnsErrorOkIfNumberOfMapsOk() // maps count >= 1 && maps count <= 5
+        public void MapData_ReturnsOkIfNumberOfMapsOk() // T in interval
         {
             var input = "2\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3";
             var result = Solver.MapData(input);
@@ -39,29 +41,20 @@ namespace ExamProblem.Tests.BoundaryValueAnalysis
             Assert.True(result.Item1.GetType() == typeof(List<Map>));
             Assert.True(result.Item1.Count == 2);
             Assert.True(result.Item2 == null);
-        }
-
-        [Fact]
-        public void MapData_ReturnsErrorIfNumberOfMapsTooBig() // maps count > 5
-        {
-            var input = "6\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3";
-            var result = Solver.MapData(input);
-            Assert.True(result.Item1 == null);
-            Assert.True(result.Item2 == Errors.NumberOfMapsTooBig);
         }
 
         //N
         [Fact]
-        public void MapData_ReturnsErrorIfNumberOfStarsTooSmall() // stars count < 1
+        public void MapData_ReturnsErrorIfNumberOfStarsNotOk() // N not in interval
         {
             var input = "2\n0\n3\n1 1\n2 2\n3 3";
             var result = Solver.MapData(input);
             Assert.True(result.Item1 == null);
-            Assert.True(result.Item2 == Errors.NumberOfStarsTooSmall);
+            Assert.True(result.Item2 == Errors.NumberOfStarsTooSmall || result.Item2 == Errors.NumberOfStarsTooBig);
         }
 
         [Fact]
-        public void MapData_ReturnsOkIfNumberOfStarsOk() // stars count >= 1 && stars count <= 400
+        public void MapData_ReturnsOkIfNumberOfStarsOk() // N in interval
         {
             var input = "2\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3";
             var result = Solver.MapData(input);
@@ -72,17 +65,7 @@ namespace ExamProblem.Tests.BoundaryValueAnalysis
         }
 
         [Fact]
-        public void MapData_ReturnsErrorIfNumberOfStarsTooBig() // stars count > 400
-        {
-            var input = "2\n800\n3\n1 1\n2 2\n3 3";
-            var result = Solver.MapData(input);
-            Assert.True(result.Item1 == null);
-            Assert.True(result.Item2 == Errors.NumberOfStarsTooBig);
-        }
-
-        //Coordinate
-        [Fact]
-        public void MapData_ReturnsErrorIfCoordinatesTooSmall() // coordinate < 1
+        public void MapData_ReturnsErrorIfCoordinatesNotOk() // coordinates not in interval
         {
             var input = "2\n3\n1 1\n-2 2\n3 3\n3\n1 1\n2 2\n3 3";
             var result = Solver.MapData(input);
@@ -92,7 +75,7 @@ namespace ExamProblem.Tests.BoundaryValueAnalysis
         }
 
         [Fact]
-        public void MapData_ReturnsOkIfCoordinatesOk() // coordinate >= 1 && coordinate <= 109
+        public void MapData_ReturnsOkIfCoordinatesOk() // coordinates in interval
         {
             var input = "2\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3";
             var result = Solver.MapData(input);
@@ -102,14 +85,27 @@ namespace ExamProblem.Tests.BoundaryValueAnalysis
             Assert.True(result.Item2 == null);
         }
 
+        //identical points
         [Fact]
-        public void MapData_ReturnsErrorIfCoordinatesTooBig() // coordinate > 109
+        public void MapData_ReturnsErrorIfTwoPointsAreIdentical() // are identical
         {
-            var input = "2\n3\n1 1\n200 2\n3 3\n3\n1 1\n2 2\n3 3";
+            var input = "2\n3\n1 1\n1 1\n3 3\n3\n1 1\n2 2\n3 3";
             var result = Solver.MapData(input);
             Assert.True(result.Item1 == null);
-            Assert.True(result.Item2 == Errors.CoordinateTooBig);
+            Assert.True(result.Item2 == Errors.TwoIdenticalPoints);
         }
+
+        [Fact]
+        public void MapData_ReturnsOkIfNoPointsAreIdentical() // are not identical
+        {
+            var input = "2\n3\n1 1\n2 2\n3 3\n3\n1 1\n2 2\n3 3";
+            var result = Solver.MapData(input);
+            Assert.False(result.Item1 == null);
+            Assert.True(result.Item1.GetType() == typeof(List<Map>));
+            Assert.True(result.Item1.Count == 2);
+            Assert.True(result.Item2 == null);
+        }
+
 
 
     }

@@ -3,7 +3,7 @@ using ExamProblem.Models;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ExamProblem.Tests.EquivalenceClasses
+namespace ExamProblem.Tests.EquivalenceClassesAnalysis
 {
     public class SolverTests
     {
