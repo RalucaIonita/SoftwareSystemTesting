@@ -25,5 +25,7 @@ namespace ExamProblem.Models
 
         public static string CoordinateTooSmall = "Given coordinate is smaller than 1.";
         public static string CoordinateTooBig = "Given coordinate is greater than 109.";
+        public static string Success = "Success.";
+        public static string Error = "Error.";
     }
 }

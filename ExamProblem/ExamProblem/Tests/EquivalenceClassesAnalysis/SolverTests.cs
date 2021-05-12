@@ -46,7 +46,7 @@ namespace ExamProblem.Tests.EquivalenceClassesAnalysis
         // C3 = {text | text does not contain the number of maps declared}
         // C4 = {text | text is empty string}
         // C5 = {text | text is valid}
-        // C6 = {text | text does not contain two identical points}
+        // C6 = {text | text contains two identical points}
 
 
         [Fact]

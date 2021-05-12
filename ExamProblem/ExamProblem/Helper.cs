@@ -17,7 +17,7 @@ namespace ExamProblem
             var result = "";
             foreach (var ch in str)
             {
-                if (char.IsDigit(ch) || ch == ' ' || ch == '\n')
+                if (char.IsDigit(ch) || ch == ' ' || ch == '\n' || ch == '-')
                     result += ch;
             }
             return result;
