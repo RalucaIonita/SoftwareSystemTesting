@@ -1,9 +1,10 @@
-﻿using ExamProblem.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ExamProblem;
+using ExamProblem.Models;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ExamProblem.Tests.BoundaryValueAnalysis
+namespace Tests.Tests.BoundaryValueAnalysis
 {
     public class SolverTests
     {

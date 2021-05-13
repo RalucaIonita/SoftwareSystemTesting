@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using ExamProblem;
 using ExamProblem.Models;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ExamProblem.Tests.CategoryAnalysis
+namespace Tests.Tests.CategoryAnalysis
 {
     public class SolverTests
     {

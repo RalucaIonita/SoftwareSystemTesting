@@ -74,7 +74,6 @@ namespace ExamProblem
                     if (x > 109 || y > 109)
                         return new Tuple<List<Map>, string>(null, Errors.CoordinateTooBig);
                     var point = new Point(x, y);
-                    Console.WriteLine(point.X + " -----> " + point.Y);
                     if (map?.Points.Count != 0)
                     {
                         var exists = map?.Points.FirstOrDefault(p => p.X == point.X && p.Y == point.Y);

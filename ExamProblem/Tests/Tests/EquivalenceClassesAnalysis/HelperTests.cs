@@ -1,13 +1,15 @@
-﻿using ExamProblem.Models;
+﻿using ExamProblem;
+using ExamProblem.Models;
 using Xunit;
 
-namespace ExamProblem.Tests.EquivalenceClassesAnalysis
+namespace Tests.Tests.EquivalenceClassesAnalysis
 {
     public class HelperTests
     {
         //classes ->
         // C1 = {points | points can form a triangle}
         // C2 = {points | points cannot form a triangle}
+        
 
         [Fact]
         public void CanFormTriangle_ReturnsFalseIfPointsDoNotForm() //Class 1

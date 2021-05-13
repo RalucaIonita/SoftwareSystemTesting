@@ -1,0 +1,1 @@
+{"TestProjects":["Tests"],"IgnoredProjects":[],"ProjectMappings":[],"Filter":{"FilterItems":[]},"NumberOfTestRunInstances":5,"MaxTestTimeMin":5,"TestRunner":"DotNet","Mutators":["ConditionalBoundary","NegateCondtional","NegateTypeCompability","Increment","MethodCall"],"CreateBaseline":true}

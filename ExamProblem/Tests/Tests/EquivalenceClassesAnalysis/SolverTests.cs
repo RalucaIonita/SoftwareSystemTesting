@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using ExamProblem;
 using ExamProblem.Models;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ExamProblem.Tests.EquivalenceClassesAnalysis
+namespace Tests.Tests.EquivalenceClassesAnalysis
 {
     public class SolverTests
     {
@@ -23,7 +24,7 @@ namespace ExamProblem.Tests.EquivalenceClassesAnalysis
         [Fact]
         public void LoadText_ShouldReturnString() //Class 1
         {
-            var path = "..\\..\\..\\..\\ExamProblem\\plagiat.in";
+            var path = "C:\\Users\\nuuit\\Source\\Repos\\SoftwareSystemTesting\\ExamProblem\\ExamProblem\\plagiat.in";
             var text = Solver.LoadFileContent(path);
 
             var expected = "2\r\n5\r\n1 1\r\n2 2\r\n0 0\r\n1 2\r\n100 105\r\n5\r\n1 1\r\n2 2\r\n1 2\r\n0 0\r\n0 1";
